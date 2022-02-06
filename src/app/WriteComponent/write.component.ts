@@ -1,43 +1,55 @@
-import { ApiServiceService } from './api-service.service';
+import { ApiServiceService } from './write.service';
 import { Component, OnInit } from '@angular/core';
-
-interface WritingElement {
-  id: number;
-  title: string;
-  content: string;
-  created_at: string;
-}
+import { Router } from '@angular/router';
+import { Location } from '@angular/common'
+import * as dayjs from 'dayjs';
 
 @Component({
   selector: 'write',
   templateUrl: './write.component.html',
   styleUrls: ['./write.component.css']
 })
-export class WriteComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'title', 'content', 'createdAt'];
-  writingList: WritingElement[] = [];
+
+export class WriteComponent {
   title: string | null = '';
   content: string | null = '';
   
-  constructor(private apiService: ApiServiceService) {}
+  constructor(
+    private apiService: ApiServiceService,
+    private router: Router,
+    private location: Location,
+  ) {}
 
-  ngOnInit() {
-    this.getWritings();
+  onChange (e: any, type: string) {
+    switch (type) {
+      case 'title':
+        this.title = e.target.value;
+        break;
+      case 'content':
+        this.content = e.target.value;
+        break;
+      default:
+        break;
+    }
   }
 
-  getWritings() {
-    this.apiService.getWritings().subscribe(response => {
-      let result: any[] = [];
-      result = result.concat(response);
-      this.writingList = result;
+  onKeyUpEvent (e: any) {
+    this.content = e.target.value;
+  }
+
+  onClickWriteButton() {
+    const body = {
+      title: this.title,
+      content: this.content,
+      created_at: dayjs().format("YYYY.MM.DD HH:mm:sss"),
+    }
+    
+    this.apiService.addContent(body).subscribe((res: any) => {
+      this.router.navigate(['/home']);
     })
   }
 
-  onChangeEvent(type: string, e: any) {
-    console.log(type, e.target.value)
-  }
-
-  submit () {
-    console.log(this.title, this.content);
+  onClickBackButton () {
+    this.location.back()
   }
 }

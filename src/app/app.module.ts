@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './HomeComponent/home.component';
 import { DetailComponent } from './DetailComponent/detail.component';
+import { WriteComponent } from './WriteComponent/write.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
@@ -17,6 +18,7 @@ import { MatButtonModule } from '@angular/material/button';
     AppComponent,
     HomeComponent,
     DetailComponent,
+    WriteComponent,
   ],
   imports: [
     BrowserModule,

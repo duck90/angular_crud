@@ -9,6 +9,6 @@ export class ApiServiceService {
     apiURL = "http://localhost:3000";
 
     getWritings () {
-        return this._http.get(`${this.apiURL}/writing`)
+        return this._http.get(`${this.apiURL}/writings`)
     }
 }

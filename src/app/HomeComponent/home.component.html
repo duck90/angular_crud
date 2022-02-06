@@ -1,25 +1,14 @@
 <div ngClass="table_wrap">
+  <div class="example-button-row">
+    <button mat-raised-button color="primary" (click)="onClickWriteButton()">글쓰기</button>
+  </div>
   <table mat-table [dataSource]="writingList" class="mat-elevation-z8">
     <ng-container *ngFor="let column of displayedColumns" matColumnDef={{column}} >
       <th mat-header-cell *matHeaderCellDef>{{column}} </th>
       <td mat-cell *matCellDef="let element" (click)="onClickRow(element['id'])"> {{element[column]}} </td>
     </ng-container>
     
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" ></tr>
-    </table>
-
-  <form class="example-form">
-    <mat-form-field class="example-full-width" appearance="fill">
-      <mat-label>Title</mat-label>
-      <input matInput placeholder="Ex. Pizza" (change)="onChangeEvent('title', $event)">
-    </mat-form-field>
-  
-    <mat-form-field class="example-full-width" appearance="fill">
-      <mat-label>Content</mat-label>
-      <textarea matInput placeholder="Ex. It makes me feel..." (change)="onChangeEvent('content', $event)"></textarea>
-    </mat-form-field>
-  </form>
-    
-    <button mat-raised-button (click)="submit()">글쓰기</button>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" ></tr>
+  </table>
 </div>

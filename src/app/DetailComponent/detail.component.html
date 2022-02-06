@@ -1,15 +1,20 @@
-<div ngClass="detail_wrap">
+<div class="detail_wrap">
   <form class="example-form">
-    <mat-form-field class="example-full-width">
+    <mat-form-field class="example-full-width" appearance="fill">
       <mat-label>Title</mat-label>
-      <input matInput placeholder="Ex. Pizza">
+      <input matInput placeholder="글 제목" value="{{title}}" (keyup)="onChange($event, 'title')">
     </mat-form-field>
   
-    <mat-form-field class="example-full-width">
+    <mat-form-field class="example-full-width" appearance="fill">
       <mat-label>Content</mat-label>
-      <textarea matInput placeholder="Ex. It makes me feel..."></textarea>
+      <textarea matInput placeholder="내용" value="{{content}}" (keyup)="onChange($event, 'content')"></textarea>
     </mat-form-field>
   </form>
-    
-    <button mat-raised-button>글쓰기</button>
+  <section>
+    <div class="example-button-row">
+      <button mat-raised-button color="primary" (click)="onClickModifyButton()">수정</button>
+    <button mat-raised-button color="warn" (click)="onClickDeleteButton()">삭제</button>
+    <button mat-raised-button (click)="onClickBackButton()">뒤로</button>
+    </div>
+  </section>
 </div>

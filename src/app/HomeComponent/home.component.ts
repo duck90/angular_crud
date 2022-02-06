@@ -1,6 +1,6 @@
 import { ApiServiceService } from './home.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 interface WritingElement {
   id: number;
@@ -17,7 +17,7 @@ interface WritingElement {
 })
 
 export class HomeComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'title', 'content', 'created_at'];
+  displayedColumns: string[] = ['id', 'title', 'content', 'created_at', '삭제'];
   writingList: WritingElement[] = [];
   title: string | null = '';
   content: string | null = '';
@@ -43,11 +43,7 @@ export class HomeComponent implements OnInit {
     this.router.navigate([`/detail/${id}`]);
   }
 
-  onChangeEvent(type: string, e: any) {
-    console.log(type, e.target.value)
-  }
-
-  submit () {
-    console.log(this.title, this.content);
+  onClickWriteButton () {
+    this.router.navigate([`/write`]);
   }
 }
