@@ -5,6 +5,13 @@ import { Location } from '@angular/common'
 import { Router } from '@angular/router';
 import * as dayjs from 'dayjs';
 
+interface WritingElement {
+  id: number;
+  title: string;
+  content: string;
+  created_at: string;
+}
+
 @Component({
   selector: 'detail',
   templateUrl: './detail.component.html',
@@ -13,8 +20,8 @@ import * as dayjs from 'dayjs';
 
 export class DetailComponent implements OnInit {
   postId: string | null = null;
-  title: string | null = '';
-  content: string | null = '';
+  title: string = '';
+  content: string = '';
   
   constructor(
     private apiService: ApiServiceService,
@@ -31,27 +38,15 @@ export class DetailComponent implements OnInit {
     const id = url.split('/')[2];
     this.postId = id;
 
-    this.apiService.getDetail(id).subscribe((res: any) => {
+    this.apiService.getDetail(id).subscribe((res: WritingElement) => {
       this.title = res.title;
       this.content = res.content;
     })
   }
 
-  onChange (e: any, type: string) {
-    switch (type) {
-      case 'title':
-        this.title = e.target.value;
-        break;
-      case 'content':
-        this.content = e.target.value;
-        break;
-      default:
-        break;
-    }
-  }
-
-  onKeyUpEvent (e: any) {
-    this.content = e.target.value;
+  onChange (e: Event, type: string) {
+    const value: string = (e.target as HTMLInputElement).value;
+    return (this as any)[type] = value;
   }
 
   onClickModifyButton() {
@@ -63,9 +58,7 @@ export class DetailComponent implements OnInit {
       created_at: dayjs().format("YYYY.MM.DD HH:mm:sss"),
     }
     
-    this.apiService.modifyPost(this.postId, body).subscribe((res: any) => {
-      this.router.navigate(['/home']);
-    })
+    this.apiService.modifyPost(this.postId, body).subscribe(() => this.router.navigate(['/home']))
   }
 
   onClickBackButton () {
@@ -75,8 +68,6 @@ export class DetailComponent implements OnInit {
   onClickDeleteButton() {
     if (!this.postId) return;
 
-    this.apiService.deletePost(this.postId).subscribe((res: any) => {
-      this.router.navigate(['/home']);
-    })
+    this.apiService.deletePost(this.postId).subscribe(() => this.router.navigate(['/home']))
   }
 }

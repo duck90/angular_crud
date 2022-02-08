@@ -11,8 +11,8 @@ import * as dayjs from 'dayjs';
 })
 
 export class WriteComponent {
-  title: string | null = '';
-  content: string | null = '';
+  title: string = '';
+  content: string = '';
   
   constructor(
     private apiService: ApiServiceService,
@@ -20,21 +20,9 @@ export class WriteComponent {
     private location: Location,
   ) {}
 
-  onChange (e: any, type: string) {
-    switch (type) {
-      case 'title':
-        this.title = e.target.value;
-        break;
-      case 'content':
-        this.content = e.target.value;
-        break;
-      default:
-        break;
-    }
-  }
-
-  onKeyUpEvent (e: any) {
-    this.content = e.target.value;
+  onChange (e: Event, type: string) {
+    const value: string = (e.target as HTMLInputElement).value;
+    return (this as any)[type] = value;
   }
 
   onClickWriteButton() {
@@ -44,9 +32,7 @@ export class WriteComponent {
       created_at: dayjs().format("YYYY.MM.DD HH:mm:sss"),
     }
     
-    this.apiService.addContent(body).subscribe((res: any) => {
-      this.router.navigate(['/home']);
-    })
+    this.apiService.addContent(body).subscribe(() => this.router.navigate(['/home']))
   }
 
   onClickBackButton () {
