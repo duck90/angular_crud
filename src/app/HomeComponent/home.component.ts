@@ -1,6 +1,8 @@
 import { ApiServiceService } from './home.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+
 
 interface WritingElement {
   id: number;
@@ -17,7 +19,7 @@ interface WritingElement {
 })
 
 export class HomeComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'title', 'content', 'created_at', '삭제'];
+  displayedColumns: string[] = ['id', 'title', 'content', 'created_at'];
   writingList: WritingElement[] = [];
   title: string | null = '';
   content: string | null = '';
@@ -32,10 +34,8 @@ export class HomeComponent implements OnInit {
   }
 
   getWritings() {
-    this.apiService.getWritings().subscribe(response => {
-      let result: any[] = [];
-      result = result.concat(response);
-      this.writingList = result;
+    this.apiService.getWritings().subscribe((res: WritingElement[]) => {
+      this.writingList = res;
     })
   }
 
