@@ -21,8 +21,8 @@ interface WritingElement {
 export class HomeComponent implements OnInit {
   displayedColumns: string[] = ['id', 'title', 'content', 'created_at'];
   writingList: WritingElement[] = [];
-  title: string | null = '';
-  content: string | null = '';
+  title: string= '';
+  content: string= '';
   
   constructor(
     private apiService: ApiServiceService,
